@@ -1,0 +1,24 @@
+name: Deploy Server to Render
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'server/**'
+      - 'server/**/**'
+      - '!client/**'
+
+jobs:
+  deploy:
+    if: github.repository == 'parsa-mehek/LinkingLink_server'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trigger Render deploy hook
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK is not set; skipping." && exit 0
+          fi
+          curl -sS -X POST "$RENDER_DEPLOY_HOOK"
