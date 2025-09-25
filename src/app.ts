@@ -9,6 +9,9 @@ import { env } from './config.js';
 import authRoutes from './routes/auth.routes.js';
 import usersRoutes from './routes/users.routes.js';
 import progressRoutes from './routes/progress.routes.js';
+import feedRoutes from './routes/feed.routes.js';
+import friendsRoutes from './routes/friends.routes.js';
+import skillsRoutes from './routes/skills.routes.js';
 
 export const createApp = () => {
   const app = express();
@@ -40,6 +43,9 @@ export const createApp = () => {
   app.use('/api/auth', authRoutes);
   app.use('/api/users', usersRoutes);
   app.use('/api/progress', progressRoutes);
+  app.use('/api/feed', feedRoutes);
+  app.use('/api/friends', friendsRoutes);
+  app.use('/api/skills', skillsRoutes);
 
   // Not found
   app.use((_req, res) => res.status(404).json({ error: 'Not Found' }));
